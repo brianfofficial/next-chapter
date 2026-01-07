@@ -4,15 +4,17 @@ import { useState } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
-import { Heart, ArrowRight, MessageCircle, Loader2 } from "lucide-react"
+import { Heart, ArrowRight, MessageCircle, Loader2, Plus } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { SPORTS } from "@/lib/translations"
 import { useConversations } from "@/lib/hooks/useConversations"
 import { useEmployer } from "@/lib/hooks/useEmployer"
+import { AddToPipelineModal } from "@/components/pipeline/AddToPipelineModal"
 
 interface AthleteCardProps {
   athlete: {
     id: string
+    full_name?: string | null
     sport: string | null
     position: string | null
     school: string | null
@@ -31,6 +33,7 @@ export function AthleteCard({ athlete, onSaveToggle }: AthleteCardProps) {
   const [isSaved, setIsSaved] = useState(athlete.isSaved || false)
   const [saving, setSaving] = useState(false)
   const [messaging, setMessaging] = useState(false)
+  const [showPipelineModal, setShowPipelineModal] = useState(false)
 
   const sport = SPORTS.find(s => s.id === athlete.sport)
   const summaryPreview = athlete.translated_summary
@@ -147,7 +150,7 @@ export function AthleteCard({ athlete, onSaveToggle }: AthleteCardProps) {
           </p>
 
           {/* Action Buttons */}
-          <div className="flex gap-2">
+          <div className="flex gap-2 mb-2">
             <Button
               onClick={handleMessage}
               disabled={messaging}
@@ -179,8 +182,30 @@ export function AthleteCard({ athlete, onSaveToggle }: AthleteCardProps) {
               View Profile
             </Button>
           </div>
+          <Button
+            onClick={(e) => {
+              e.stopPropagation()
+              setShowPipelineModal(true)
+            }}
+            variant="secondary"
+            className="w-full border-blue-200 text-blue-600 hover:bg-blue-50 hover:text-blue-700"
+            size="sm"
+          >
+            <Plus className="mr-2 h-4 w-4" />
+            Add to Pipeline
+          </Button>
         </CardContent>
       </Card>
+
+      <AddToPipelineModal
+        isOpen={showPipelineModal}
+        onClose={() => setShowPipelineModal(false)}
+        athleteId={athlete.id}
+        athleteName={athlete.full_name || `${athlete.sport} Athlete`}
+        onSuccess={() => {
+          // Optionally show a success message
+        }}
+      />
     </motion.div>
   )
 }
