@@ -5,7 +5,7 @@ import { useMessages } from "@/lib/hooks/useMessages"
 import { MessageBubble } from "./MessageBubble"
 import { MessageComposer } from "./MessageComposer"
 import { Loader2 } from "lucide-react"
-import { useEmployer } from "@/lib/hooks/useEmployer"
+import { useAuth } from "@/lib/hooks/useAuth"
 
 interface ChatInterfaceProps {
   conversationId: string
@@ -18,7 +18,7 @@ export function ChatInterface({
   otherPersonName,
   otherPersonRole,
 }: ChatInterfaceProps) {
-  const { profile: employer } = useEmployer()
+  const { user } = useAuth()
   const { messages, loading, sending, sendMessage, markAsRead } =
     useMessages(conversationId)
   const messagesEndRef = useRef<HTMLDivElement>(null)
@@ -71,7 +71,7 @@ export function ChatInterface({
               <MessageBubble
                 key={message.id}
                 message={message}
-                isCurrentUser={message.sender_id === employer?.id}
+                isCurrentUser={message.sender_id === user?.id}
               />
             ))}
             <div ref={messagesEndRef} />

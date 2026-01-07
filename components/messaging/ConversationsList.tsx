@@ -4,7 +4,7 @@ import { useConversations } from "@/lib/hooks/useConversations"
 import { Badge } from "@/components/ui/badge"
 import { Loader2, MessageCircle } from "lucide-react"
 import { formatDistanceToNow } from "date-fns"
-import { useEmployer } from "@/lib/hooks/useEmployer"
+import { useAuth } from "@/lib/hooks/useAuth"
 
 interface ConversationsListProps {
   selectedConversationId?: string
@@ -15,7 +15,7 @@ export function ConversationsList({
   selectedConversationId,
   onSelectConversation,
 }: ConversationsListProps) {
-  const { profile: employer } = useEmployer()
+  const { user } = useAuth()
   const { conversations, loading, error } = useConversations()
 
   if (loading) {
@@ -50,7 +50,7 @@ export function ConversationsList({
   return (
     <div className="divide-y divide-gray-800">
       {conversations.map((conversation) => {
-        const isEmployer = employer?.id === conversation.employer_id
+        const isEmployer = user?.id === conversation.employer_id
         const otherPerson = isEmployer
           ? conversation.athlete
           : conversation.employer

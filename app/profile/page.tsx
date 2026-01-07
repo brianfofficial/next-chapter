@@ -119,6 +119,9 @@ export default function ProfilePage() {
               <a href="/" className="text-gray-300 hover:text-gold transition-colors">
                 Home
               </a>
+              <a href="/profile/messages" className="text-gray-300 hover:text-gold transition-colors">
+                Messages
+              </a>
               <Button onClick={handleSignOut} variant="ghost" size="sm">
                 Sign Out
               </Button>
