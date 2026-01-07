@@ -86,8 +86,8 @@ export default function Home() {
                 Build Your Profile
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
-              <Button size="lg" variant="secondary" className="text-lg">
-                Watch Demo
+              <Button size="lg" variant="secondary" onClick={scrollToTranslator} className="text-lg">
+                See How It Works
               </Button>
             </div>
           </motion.div>
