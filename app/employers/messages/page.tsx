@@ -1,13 +1,13 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, Suspense } from "react"
 import { useSearchParams } from "next/navigation"
 import { ConversationsList } from "@/components/messaging/ConversationsList"
 import { ChatInterface } from "@/components/messaging/ChatInterface"
 import { Button } from "@/components/ui/button"
 import { MessageCircle } from "lucide-react"
 
-export default function EmployerMessagesPage() {
+function MessagesContent() {
   const searchParams = useSearchParams()
   const conversationParam = searchParams.get("conversation")
 
@@ -112,5 +112,20 @@ export default function EmployerMessagesPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function EmployerMessagesPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-employer-blue mx-auto mb-4"></div>
+          <p className="text-gray-400">Loading messages...</p>
+        </div>
+      </div>
+    }>
+      <MessagesContent />
+    </Suspense>
   )
 }

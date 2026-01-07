@@ -1,12 +1,12 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, Suspense } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { CheckCircle2, Loader2 } from "lucide-react"
 
-export default function SuccessPage() {
+function SuccessContent() {
   const [loading, setLoading] = useState(true)
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -88,5 +88,17 @@ export default function SuccessPage() {
         </Card>
       </div>
     </div>
+  )
+}
+
+export default function SuccessPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black flex items-center justify-center">
+        <Loader2 className="h-12 w-12 animate-spin text-employer-blue" />
+      </div>
+    }>
+      <SuccessContent />
+    </Suspense>
   )
 }

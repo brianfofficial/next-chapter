@@ -3,7 +3,7 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Check, Loader2 } from "lucide-react"
-import { useState, useEffect } from "react"
+import { useState, useEffect, Suspense } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { loadStripe } from "@stripe/stripe-js"
 import { useEmployer } from "@/lib/hooks/useEmployer"
@@ -12,7 +12,7 @@ const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
 )
 
-export default function UpgradePage() {
+function UpgradeContent() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
   const router = useRouter()
@@ -156,5 +156,17 @@ export default function UpgradePage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function UpgradePage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-employer-blue" />
+      </div>
+    }>
+      <UpgradeContent />
+    </Suspense>
   )
 }
