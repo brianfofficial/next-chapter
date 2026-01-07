@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation"
 import { motion } from "framer-motion"
 import { GoogleButton } from "@/components/auth/GoogleButton"
 import { LinkedInButton } from "@/components/auth/LinkedInButton"
+import { EmailPasswordAuth } from "@/components/auth/EmailPasswordAuth"
+import { AdminDevLogin } from "@/components/auth/AdminDevLogin"
 import { useAuth } from "@/lib/hooks/useAuth"
 
 export default function LoginPage() {
@@ -67,20 +69,36 @@ export default function LoginPage() {
             <p className="text-gray-400">Sign in to save your profile</p>
           </div>
 
-          {/* OAuth Buttons */}
-          <div className="space-y-4">
-            <GoogleButton />
-            <LinkedInButton />
-          </div>
+          {/* Admin Quick Login */}
+          <AdminDevLogin />
 
           {/* Divider */}
-          <div className="relative my-8">
+          <div className="relative my-6">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-gray-700"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-4 bg-gray-900/80 text-gray-500">or</span>
+              <span className="px-4 bg-gray-900/80 text-gray-500">or use email</span>
             </div>
+          </div>
+
+          {/* Email/Password Auth */}
+          <EmailPasswordAuth />
+
+          {/* Divider */}
+          <div className="relative my-6">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-gray-700"></div>
+            </div>
+            <div className="relative flex justify-center text-sm">
+              <span className="px-4 bg-gray-900/80 text-gray-500">or use OAuth</span>
+            </div>
+          </div>
+
+          {/* OAuth Buttons */}
+          <div className="space-y-3">
+            <GoogleButton />
+            <LinkedInButton />
           </div>
 
           {/* Back to home link */}
