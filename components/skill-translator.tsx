@@ -116,8 +116,38 @@ export function SkillTranslator() {
 
   const selectedSport = SPORTS.find(s => s.id === athleteData.sport)
 
+  // Progress indicator component
+  const ProgressBar = () => {
+    const steps = ["sport", "details", "results"]
+    const currentIndex = steps.indexOf(step)
+
+    return (
+      <div className="max-w-md mx-auto mb-8">
+        <div className="flex items-center justify-center gap-2">
+          {steps.map((s, index) => (
+            <div key={s} className="flex items-center">
+              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
+                index <= currentIndex ? 'bg-gold text-black' : 'bg-gray-800 text-gray-500'
+              }`}>
+                {index + 1}
+              </div>
+              {index < steps.length - 1 && (
+                <div className={`w-16 h-1 ${index < currentIndex ? 'bg-gold' : 'bg-gray-800'}`}></div>
+              )}
+            </div>
+          ))}
+        </div>
+        <div className="flex justify-center mt-2 text-sm text-gray-400">
+          Step {currentIndex + 1} of 3
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="w-full max-w-6xl mx-auto px-4 py-12">
+      {step !== "results" && <ProgressBar />}
+
       <AnimatePresence mode="wait">
         {step === "sport" && (
           <motion.div
