@@ -206,7 +206,7 @@ export default function ProfilePage() {
             className="space-y-6"
           >
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-3xl font-bold gradient-text">Your Saved Translation</h2>
+              <h2 className="text-3xl font-bold gradient-text">Your Professional Profile</h2>
               <div className="text-sm text-gray-500">
                 Last updated: {new Date(profile.updated_at).toLocaleDateString()}
               </div>
@@ -276,7 +276,7 @@ export default function ProfilePage() {
                 variant="secondary"
                 onClick={() => router.push('/#translator')}
               >
-                Create New Translation
+                Update My Profile
               </Button>
             </div>
           </motion.div>
@@ -289,12 +289,12 @@ export default function ProfilePage() {
             <Card>
               <CardContent className="p-12 text-center">
                 <div className="text-6xl mb-4">📝</div>
-                <h3 className="text-2xl font-bold mb-4">No Saved Translation Yet</h3>
+                <h3 className="text-2xl font-bold mb-4">No Profile Yet</h3>
                 <p className="text-gray-400 mb-8">
-                  Create your first translation to get started!
+                  Create your professional profile to get started!
                 </p>
                 <Button onClick={() => router.push('/#translator')}>
-                  Create Translation
+                  Build My Profile
                 </Button>
               </CardContent>
             </Card>
