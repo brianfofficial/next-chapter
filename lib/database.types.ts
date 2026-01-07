@@ -71,6 +71,11 @@ export interface Database {
           contact_email: string
           subscription_tier: 'free_trial' | 'basic' | 'pro'
           roles_hiring_for: string | null
+          stripe_customer_id: string | null
+          stripe_subscription_id: string | null
+          subscription_status: string | null
+          subscription_start_date: string | null
+          subscription_end_date: string | null
           created_at: string
           updated_at: string
         }
@@ -82,6 +87,11 @@ export interface Database {
           contact_email: string
           subscription_tier?: 'free_trial' | 'basic' | 'pro'
           roles_hiring_for?: string | null
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string | null
+          subscription_status?: string | null
+          subscription_start_date?: string | null
+          subscription_end_date?: string | null
           created_at?: string
           updated_at?: string
         }
@@ -93,6 +103,11 @@ export interface Database {
           contact_email?: string
           subscription_tier?: 'free_trial' | 'basic' | 'pro'
           roles_hiring_for?: string | null
+          stripe_customer_id?: string | null
+          stripe_subscription_id?: string | null
+          subscription_status?: string | null
+          subscription_start_date?: string | null
+          subscription_end_date?: string | null
           created_at?: string
           updated_at?: string
         }

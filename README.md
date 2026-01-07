@@ -46,11 +46,24 @@ A skill translation engine that transforms athletic achievements into corporate 
 - ✅ **Subscription Tiers** - Free trial vs Pro tier distinction
 - ✅ **Blue Employer Theme** - Visual distinction from athlete gold theme
 
+### Milestone 4 ✅ Complete
+- ✅ **Stripe Integration** - Full payment processing with Stripe Checkout
+- ✅ **Subscription Management** - Pro plan at $299/month with automatic billing
+- ✅ **Checkout Flow** - Secure payment with test mode support
+- ✅ **Webhook Handlers** - Process subscription events (create, update, cancel)
+- ✅ **Billing Portal** - Self-service subscription and payment management
+- ✅ **Payment Success Page** - Post-checkout confirmation and next steps
+- ✅ **Settings Page** - Account management with billing integration
+- ✅ **Database Migrations** - Added Stripe fields for customer and subscription tracking
+- ✅ **Seed Data Script** - 20 sample athlete profiles for testing and demos
+- ✅ **Contact Info Unlocking** - Automatic access after Pro subscription payment
+
 ## Tech Stack
 
 - **Framework**: Next.js 14 (App Router)
 - **Database**: Supabase (PostgreSQL)
 - **Authentication**: Supabase Auth (Google & LinkedIn OAuth)
+- **Payments**: Stripe (Checkout, Subscriptions, Billing Portal)
 - **Styling**: Tailwind CSS + Custom design system
 - **UI Components**: Custom components with shadcn/ui patterns
 - **Animations**: Framer Motion
@@ -194,26 +207,32 @@ Each sport has unique translations:
 
 ## Next Milestones
 
-### Milestone 4: Monetization & Payments (In Progress)
-- ⏳ Stripe Connect integration for payments
-- ⏳ Subscription management (Free Trial → Pro at $299/month)
-- ⏳ Usage-based credits for contact unlocks
-- ⏳ Billing portal and invoice management
-- ⏳ Upgrade/downgrade flows
-- ⏳ Payment webhooks and reconciliation
-
-### Milestone 5: Enhanced Features (Upcoming)
+### Milestone 5: Enhanced Features & Analytics (Next)
 - In-app messaging between employers and athletes
-- Resume PDF generation
-- Email notifications and digests
-- Employer analytics dashboard
+- Resume PDF generation with branded templates
+- Email notifications and weekly digests
+- Employer analytics dashboard with hiring insights
 - Success tracking and placement metrics
+- Athlete search saved filters
+- Advanced search with keywords and skills
+- Employer team management (add multiple users)
 
-### Milestone 6: Athletic Department Portal (Upcoming)
+### Milestone 6: Athletic Department Portal
 - White-label customization for universities
-- Placement tracking and reporting
+- Placement tracking and reporting dashboard
 - Recruiting materials integration
 - Team management for athletic departments
+- Bulk athlete imports and profile templates
+- Department-wide analytics and success metrics
+
+### Milestone 7: Go-to-Market & Scale
+- Production launch with live payments
+- Custom domain and branding
+- Analytics integration (PostHog/Google Analytics)
+- SEO optimization and content marketing
+- Partnership outreach to athletic departments
+- Beta testing program with 10-20 employers
+- User feedback collection and iteration
 
 ## Design System
 
@@ -278,15 +297,17 @@ For inquiries about Next Chapter, please reach out through the platform.
 
 ---
 
-**Status**: ✅ Milestones 1, 2, & 3 Complete
+**Status**: ✅ Milestones 1, 2, 3, & 4 Complete
 
 - Milestone 1: Landing page and skill translator ✅
 - Milestone 2: Authentication and database integration ✅
 - Milestone 3: Employer dashboard and browse ✅
+- Milestone 4: Stripe integration and payment processing ✅
 
 **Next Steps**:
-1. Configure Supabase credentials (see SUPABASE_SETUP.md)
-2. Deploy to production: `vercel --prod`
-3. Test full employer signup → browse → save flows
-4. Begin Milestone 4: Stripe integration for payments
-5. Launch beta with select employers
+1. **Add Stripe keys** to `.env.local` (see MILESTONE-4-SETUP.md)
+2. **Seed database** with sample athletes: `npx ts-node scripts/seed.ts`
+3. **Test payment flow** locally with Stripe test cards
+4. **Deploy to production** with updated environment variables
+5. **Set up production webhooks** in Stripe dashboard
+6. **Launch beta** with select employers and gather feedback

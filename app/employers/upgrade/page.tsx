@@ -2,9 +2,74 @@
 
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Check } from "lucide-react"
+import { Check, Loader2 } from "lucide-react"
+import { useState, useEffect } from "react"
+import { useRouter, useSearchParams } from "next/navigation"
+import { loadStripe } from "@stripe/stripe-js"
+import { useEmployer } from "@/lib/hooks/useEmployer"
+
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
+)
 
 export default function UpgradePage() {
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState("")
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const { profile: employer, loading: isLoading } = useEmployer()
+
+  const canceled = searchParams.get("canceled")
+
+  useEffect(() => {
+    if (canceled) {
+      setError("Payment was canceled. Please try again.")
+    }
+  }, [canceled])
+
+  // Redirect if already on Pro plan
+  useEffect(() => {
+    if (employer && employer.subscription_tier === "pro") {
+      router.push("/employers/browse")
+    }
+  }, [employer, router])
+
+  const handleUpgrade = async () => {
+    try {
+      setLoading(true)
+      setError("")
+
+      const response = await fetch("/api/stripe/checkout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+
+      if (!response.ok) {
+        const data = await response.json()
+        throw new Error(data.error || "Failed to create checkout session")
+      }
+
+      const { url } = await response.json()
+
+      // Redirect to Stripe Checkout
+      window.location.href = url
+    } catch (err) {
+      console.error("Checkout error:", err)
+      setError(err instanceof Error ? err.message : "Something went wrong")
+      setLoading(false)
+    }
+  }
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black flex items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-employer-blue" />
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black">
       {/* Navigation */}
@@ -28,6 +93,12 @@ export default function UpgradePage() {
             Get unlimited access to contact athletes and start hiring
           </p>
         </div>
+
+        {error && (
+          <div className="mb-8 p-4 bg-red-500/10 border border-red-500 rounded-lg text-center">
+            <p className="text-red-400">{error}</p>
+          </div>
+        )}
 
         <Card className="border-employer-blue ring-2 ring-employer-blue/50 mb-8">
           <CardContent className="p-12">
@@ -56,13 +127,21 @@ export default function UpgradePage() {
 
             <Button
               className="w-full h-14 text-lg bg-employer-blue hover:bg-employer-blue-dark"
-              disabled
+              onClick={handleUpgrade}
+              disabled={loading}
             >
-              Coming Soon - Stripe Integration
+              {loading ? (
+                <>
+                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                  Redirecting to checkout...
+                </>
+              ) : (
+                "Upgrade to Pro - $299/month"
+              )}
             </Button>
 
             <p className="text-center text-sm text-gray-500 mt-4">
-              Payment processing will be available in Milestone 4
+              Secure payment powered by Stripe • Cancel anytime
             </p>
           </CardContent>
         </Card>
@@ -71,9 +150,9 @@ export default function UpgradePage() {
           <p className="text-gray-400 mb-4">
             Need more than Pro? Contact our sales team for Enterprise pricing
           </p>
-          <Button variant="secondary" disabled>
-            Contact Sales
-          </Button>
+          <a href="mailto:sales@nextchapter.com">
+            <Button variant="secondary">Contact Sales</Button>
+          </a>
         </div>
       </div>
     </div>
