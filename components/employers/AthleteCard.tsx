@@ -2,10 +2,13 @@
 
 import { useState } from "react"
 import { Card, CardContent } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
 import { motion } from "framer-motion"
-import { Heart, ArrowRight } from "lucide-react"
+import { Heart, ArrowRight, MessageCircle, Loader2 } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { SPORTS } from "@/lib/translations"
+import { useConversations } from "@/lib/hooks/useConversations"
+import { useEmployer } from "@/lib/hooks/useEmployer"
 
 interface AthleteCardProps {
   athlete: {
@@ -23,8 +26,11 @@ interface AthleteCardProps {
 
 export function AthleteCard({ athlete, onSaveToggle }: AthleteCardProps) {
   const router = useRouter()
+  const { profile: employer } = useEmployer()
+  const { createConversation } = useConversations()
   const [isSaved, setIsSaved] = useState(athlete.isSaved || false)
   const [saving, setSaving] = useState(false)
+  const [messaging, setMessaging] = useState(false)
 
   const sport = SPORTS.find(s => s.id === athlete.sport)
   const summaryPreview = athlete.translated_summary
@@ -50,6 +56,26 @@ export function AthleteCard({ athlete, onSaveToggle }: AthleteCardProps) {
 
   const handleCardClick = () => {
     router.push(`/employers/athletes/${athlete.id}`)
+  }
+
+  const handleMessage = async (e: React.MouseEvent) => {
+    e.stopPropagation()
+    if (messaging) return
+
+    setMessaging(true)
+    try {
+      const conversation = await createConversation(athlete.id)
+      router.push(`/employers/messages?conversation=${conversation.id}`)
+    } catch (error) {
+      if (error instanceof Error && error.message === "UPGRADE_REQUIRED") {
+        router.push("/employers/upgrade")
+      } else {
+        console.error("Error creating conversation:", error)
+        alert("Failed to start conversation. Please try again.")
+      }
+    } finally {
+      setMessaging(false)
+    }
   }
 
   return (
@@ -120,10 +146,38 @@ export function AthleteCard({ athlete, onSaveToggle }: AthleteCardProps) {
             {summaryPreview}
           </p>
 
-          {/* View Profile Button */}
-          <div className="flex items-center text-employer-blue text-sm font-semibold group">
-            View Full Profile
-            <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+          {/* Action Buttons */}
+          <div className="flex gap-2">
+            <Button
+              onClick={handleMessage}
+              disabled={messaging}
+              className="flex-1 bg-employer-blue hover:bg-employer-blue-dark"
+              size="sm"
+            >
+              {messaging ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Starting...
+                </>
+              ) : (
+                <>
+                  <MessageCircle className="mr-2 h-4 w-4" />
+                  Message
+                </>
+              )}
+            </Button>
+            <Button
+              onClick={(e) => {
+                e.stopPropagation()
+                handleCardClick()
+              }}
+              variant="secondary"
+              className="flex-1"
+              size="sm"
+            >
+              <ArrowRight className="mr-2 h-4 w-4" />
+              View Profile
+            </Button>
           </div>
         </CardContent>
       </Card>
