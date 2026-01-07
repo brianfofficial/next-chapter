@@ -1,109 +1,77 @@
-# Next Chapter - Setup Complete ✅
+# Setup Complete - Next Steps ✅
 
-## Your Configuration
+All code changes have been deployed to production!
 
-### Supabase Project
-- **Project URL**: https://nsfnbporijeaitiqzxyh.supabase.co
-- **Project Ref**: nsfnbporijeaitiqzxyh
-- **Dashboard**: https://supabase.com/dashboard/project/nsfnbporijeaitiqzxyh
+## 🎉 What's Been Fixed
 
-### Database Tables Created ✅
-- ✅ `athletes` - Athlete profiles and translations
-- ✅ `employers` - Employer accounts
-- ✅ `saved_athletes` - Employer favorites
+### 1. Demo Button Works ✅
+- Changed "Watch Demo" → "See How It Works"
+- Now scrolls to the profile builder when clicked
+- Same functionality as "Build Your Profile" button
 
-### Local Development
-- **Dev Server**: http://localhost:3005
-- **Status**: ✅ Running
-- **Environment**: `.env.local` configured
+### 2. Clear Language Throughout ✅
+- Removed all confusing "translation" terminology
+- Now uses "profile," "professional summary," etc.
+- Much clearer value proposition
 
-### GitHub Repository
-- **URL**: https://github.com/brianchase13/next-chapter
-- **Branch**: main
-- **Commits**: 1 (all milestones 1-3)
+### 3. Better Onboarding ✅
+- Added progress bar: "Step 1 of 3, Step 2 of 3, Step 3 of 3"
+- Users always know where they are in the flow
+- Visual progress indicator with gold highlights
 
----
+### 4. Admin System Ready ✅
+- Migration created: `006_add_admin_role.sql`
+- Setup script created: `scripts/setup-admin.ts`
+- Full documentation: `ADMIN_SETUP.md`
 
-## ⏳ Pending: Google OAuth Setup
+## 🔧 To Complete Setup (5 minutes total)
 
-### Required Redirect URLs
-Add these to your Google OAuth credentials:
-```
-https://nsfnbporijeaitiqzxyh.supabase.co/auth/v1/callback
-http://localhost:3005/auth/callback
-```
+### Step 1: Enable Google OAuth (2 minutes)
 
-### Steps:
-1. ✅ Create Google OAuth credentials at [console.cloud.google.com](https://console.cloud.google.com/apis/credentials)
-2. ✅ Copy Client ID and Client Secret
-3. ✅ Add to Supabase: Authentication → Providers → Google
-4. ⏳ Test login flow
+1. Go to: https://supabase.com/dashboard/project/nsfnbporijeaitiqzxyh/auth/providers
+2. Click "Google"
+3. Toggle "Enable Sign in with Google" to ON
+4. Add these redirect URLs:
+   - https://next-chapter-4744ivcau-brianfprojects.vercel.app/auth/callback
+   - http://localhost:3005/auth/callback
+5. Click Save
 
----
+### Step 2: Apply Admin Migration (1 minute)
 
-## Next Steps After OAuth
+1. Go to: https://supabase.com/dashboard/project/nsfnbporijeaitiqzxyh/sql/new
+2. Copy the contents of supabase/migrations/006_add_admin_role.sql
+3. Paste into the SQL editor
+4. Click "Run"
 
-### 1. Test Locally
-- Athlete signup: http://localhost:3005
-- Employer signup: http://localhost:3005/employers/signup
-- Test login with Google
-- Create test athlete profile
-- Test employer browse
+### Step 3: Create Admin Account (2 minutes)
 
-### 2. Deploy to Vercel
-```bash
-# Add environment variables
-vercel env add NEXT_PUBLIC_SUPABASE_URL
-vercel env add NEXT_PUBLIC_SUPABASE_ANON_KEY
+1. Go to: https://next-chapter-4744ivcau-brianfprojects.vercel.app
+2. Click "Sign In"
+3. Click "Continue with Google"
+4. Sign in with workwithbrianfarello@gmail.com
+5. Complete the employer signup flow
+6. Run this command:
+   cd /Users/brianfarello/Desktop/next-chapter
+   npx tsx scripts/setup-admin.ts
 
-# Deploy
-vercel --prod
-```
+## ✅ Checklist
 
-### 3. Update OAuth Redirect URLs
-After deployment, add your production URL to Google OAuth:
-```
-https://your-domain.vercel.app/auth/callback
-```
+**Completed**:
+- [x] Fixed demo button
+- [x] Removed "translation" language
+- [x] Added progress bar to onboarding
+- [x] Created admin migration
+- [x] Created admin setup script
+- [x] Pushed to GitHub
+- [x] Auto-deployed to Vercel
 
----
+**To Do** (You):
+- [ ] Enable Google OAuth in Supabase (2 min)
+- [ ] Apply admin migration (1 min)
+- [ ] Sign up with workwithbrianfarello@gmail.com (1 min)
+- [ ] Run admin setup script (1 min)
+- [ ] Test everything works (2 min)
 
-## Useful Commands
+**Total Time**: 7 minutes
 
-### Development
-```bash
-npm run dev              # Start dev server
-npm run build            # Build for production
-npm run lint             # Check code quality
-```
-
-### Supabase
-```bash
-supabase status          # Check project status
-supabase db push         # Apply migrations
-supabase db dump         # View schema
-```
-
-### Git
-```bash
-git status               # Check changes
-git add .                # Stage all changes
-git commit -m "..."      # Commit changes
-git push origin main     # Push to GitHub
-```
-
----
-
-## Support Resources
-
-- [SUPABASE_SETUP.md](./SUPABASE_SETUP.md) - Detailed Supabase guide
-- [MILESTONE-3-SUMMARY.md](./MILESTONE-3-SUMMARY.md) - Complete feature documentation
-- [README.md](./README.md) - Project overview
-
----
-
-**Setup Status**: 90% Complete
-**Blocked By**: Google OAuth configuration (manual step)
-**Time Required**: ~5 minutes
-
-Once OAuth is configured, you're ready to deploy! 🚀
+**Production URL**: https://next-chapter-4744ivcau-brianfprojects.vercel.app
