@@ -15,46 +15,52 @@ export function AdminDevLogin() {
 
   const handleAdminLogin = async () => {
     setLoading(true)
-    setMessage("Creating admin account...")
+    setMessage("Checking account...")
 
     try {
-      // First, try API route to create/verify account
-      const res = await fetch('/api/admin/dev-login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: ADMIN_EMAIL, password: DEV_PASSWORD }),
-      })
-
-      const data = await res.json()
-
-      if (!res.ok) {
-        throw new Error(data.error || 'Failed to login')
-      }
-
-      setMessage(data.message)
-
-      // Now sign in with Supabase
       const supabase = createClient()
-      const { error: signInError } = await supabase.auth.signInWithPassword({
+
+      // First, try to sign in
+      setMessage("Attempting sign in...")
+      const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
         email: ADMIN_EMAIL,
         password: DEV_PASSWORD,
       })
 
-      if (signInError) {
-        // Account might not be confirmed yet, try signing up
-        const { error: signUpError } = await supabase.auth.signUp({
-          email: ADMIN_EMAIL,
-          password: DEV_PASSWORD,
-        })
+      if (!signInError && signInData.user) {
+        setMessage("Success! Redirecting...")
+        setTimeout(() => {
+          router.push('/profile')
+          router.refresh()
+        }, 1000)
+        return
+      }
 
-        if (!signUpError) {
-          setMessage("Account created! Signing in...")
-          // Try signing in again
-          await supabase.auth.signInWithPassword({
-            email: ADMIN_EMAIL,
-            password: DEV_PASSWORD,
-          })
+      // If sign in failed, create the account
+      setMessage("Creating admin account...")
+      const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
+        email: ADMIN_EMAIL,
+        password: DEV_PASSWORD,
+        options: {
+          emailRedirectTo: `${window.location.origin}/auth/callback`,
         }
+      })
+
+      if (signUpError) {
+        throw new Error(signUpError.message)
+      }
+
+      // Try to sign in again immediately
+      setMessage("Account created! Signing in...")
+      const { error: signInError2 } = await supabase.auth.signInWithPassword({
+        email: ADMIN_EMAIL,
+        password: DEV_PASSWORD,
+      })
+
+      if (signInError2) {
+        setMessage("Account created! Check your email to confirm, then sign in with email/password below.")
+        setLoading(false)
+        return
       }
 
       setMessage("Success! Redirecting...")
@@ -65,7 +71,6 @@ export function AdminDevLogin() {
 
     } catch (err: any) {
       setMessage(`Error: ${err.message}`)
-    } finally {
       setLoading(false)
     }
   }

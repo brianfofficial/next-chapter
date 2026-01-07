@@ -401,6 +401,30 @@ export default function EmployerSignupPage() {
                   </div>
 
                   <div className="space-y-6">
+                    {/* OAuth Explanation */}
+                    <div className="p-3 bg-employer-blue/5 border border-employer-blue/20 rounded-lg">
+                      <div className="flex items-start gap-2">
+                        <svg
+                          className="w-5 h-5 text-employer-blue flex-shrink-0 mt-0.5"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                          />
+                        </svg>
+                        <div>
+                          <p className="text-sm text-gray-300 leading-relaxed">
+                            <span className="font-semibold text-employer-blue">Secure Sign-Up:</span> We use Google OAuth for enterprise-grade security. Your account is protected by Google's authentication, with no passwords to manage.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
                     <div className="bg-gray-900/50 border border-gray-800 rounded-lg p-6">
                       <h3 className="font-semibold mb-4">Your Information:</h3>
                       <div className="space-y-2 text-sm text-gray-400">
