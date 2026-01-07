@@ -135,6 +135,61 @@ export interface Database {
           saved_at?: string
         }
       }
+      conversations: {
+        Row: {
+          id: string
+          employer_id: string
+          athlete_id: string
+          last_message_at: string
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          employer_id: string
+          athlete_id: string
+          last_message_at?: string
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          employer_id?: string
+          athlete_id?: string
+          last_message_at?: string
+          created_at?: string
+          updated_at?: string
+        }
+      }
+      messages: {
+        Row: {
+          id: string
+          conversation_id: string
+          sender_id: string
+          sender_type: 'employer' | 'athlete'
+          content: string
+          is_read: boolean
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          conversation_id: string
+          sender_id: string
+          sender_type: 'employer' | 'athlete'
+          content: string
+          is_read?: boolean
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          conversation_id?: string
+          sender_id?: string
+          sender_type?: 'employer' | 'athlete'
+          content?: string
+          is_read?: boolean
+          created_at?: string
+        }
+      }
     }
     Views: {
       [_ in never]: never
