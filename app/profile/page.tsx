@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { useAuth } from "@/lib/hooks/useAuth"
 import { useUser } from "@/lib/hooks/useUser"
-import { Copy, Check } from "lucide-react"
+import { Copy, Check, Download } from "lucide-react"
 import { useState } from "react"
 
 export default function ProfilePage() {
@@ -86,6 +86,35 @@ export default function ProfilePage() {
   const handleSignOut = async () => {
     await signOut()
     router.push('/')
+  }
+
+  const handleDownloadResume = async () => {
+    if (!user?.id) return
+
+    try {
+      const response = await fetch('/api/resume/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ athleteId: user.id })
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to generate resume')
+      }
+
+      const blob = await response.blob()
+      const url = window.URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = 'Professional_Resume.pdf'
+      document.body.appendChild(a)
+      a.click()
+      window.URL.revokeObjectURL(url)
+      document.body.removeChild(a)
+    } catch (error) {
+      console.error('Error downloading resume:', error)
+      alert('Failed to download resume. Please try again.')
+    }
   }
 
   if (authLoading || profileLoading) {
@@ -272,6 +301,13 @@ export default function ProfilePage() {
 
             {/* Action Buttons */}
             <div className="flex gap-4 justify-center pt-4">
+              <Button
+                onClick={handleDownloadResume}
+                className="bg-gold hover:bg-gold/90 text-black"
+              >
+                <Download className="h-4 w-4 mr-2" />
+                Download Resume PDF
+              </Button>
               <Button
                 variant="secondary"
                 onClick={() => router.push('/#translator')}
