@@ -57,7 +57,6 @@ async function setupAdmin() {
         .insert({
           id: existingUser.id,
           contact_email: ADMIN_EMAIL,
-          contact_name: "Admin User",
           company_name: "Next Chapter Admin",
           subscription_tier: "pro",
           subscription_status: "active",
