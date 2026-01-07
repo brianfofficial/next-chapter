@@ -64,7 +64,7 @@ export default function LoginPage() {
           {/* Logo */}
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold gradient-text mb-2">Next Chapter</h1>
-            <p className="text-gray-400">Sign in to save your translations</p>
+            <p className="text-gray-400">Sign in to save your profile</p>
           </div>
 
           {/* OAuth Buttons */}
@@ -117,7 +117,7 @@ export default function LoginPage() {
           <div className="space-y-2 text-sm">
             <div className="flex items-center justify-center gap-2 text-gray-300">
               <span className="text-gold">✓</span>
-              Save unlimited translations
+              Save your professional profile
             </div>
             <div className="flex items-center justify-center gap-2 text-gray-300">
               <span className="text-gold">✓</span>

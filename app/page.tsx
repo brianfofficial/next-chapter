@@ -83,7 +83,7 @@ export default function Home() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" onClick={scrollToTranslator} className="text-lg">
-                Translate Your Experience
+                Build Your Profile
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
               <Button size="lg" variant="secondary" className="text-lg">
@@ -104,7 +104,7 @@ export default function Home() {
               <div className="text-gray-400 mt-2">Athletes graduate yearly</div>
             </div>
             <div>
-              <div className="text-4xl font-bold text-gold">&lt;2%</div>
+              <div className="text-4xl font-bold text-gold">{"<2%"}</div>
               <div className="text-gray-400 mt-2">Go pro</div>
             </div>
             <div>
@@ -225,8 +225,8 @@ export default function Home() {
               },
               {
                 icon: <TrendingUp className="h-12 w-12" />,
-                title: "Watch It Transform",
-                description: "Get LinkedIn-ready summaries and resume bullets that prove your value.",
+                title: "Get Your Professional Profile",
+                description: "Receive LinkedIn-ready summaries and resume bullets that prove your value.",
               },
             ].map((step, index) => (
               <motion.div
@@ -299,11 +299,11 @@ export default function Home() {
               <span className="gradient-text">next chapter?</span>
             </h2>
             <p className="text-xl text-gray-400 mb-12">
-              Join thousands of athletes who've translated their experience into career success.
+              Join thousands of athletes who've turned their athletic experience into career success.
               It's free to start.
             </p>
             <Button size="lg" onClick={scrollToTranslator} className="text-lg">
-              Try It Free - Takes 60 Seconds
+              Get Started Free - Takes 60 Seconds
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </motion.div>

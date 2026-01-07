@@ -64,7 +64,7 @@ export function SkillTranslator() {
   const handleSaveTranslation = async () => {
     // If not authenticated, redirect to login
     if (!user) {
-      // Store translation data in sessionStorage to auto-save after login
+      // Store profile data in sessionStorage to auto-save after login
       sessionStorage.setItem('pendingTranslation', JSON.stringify({
         athleteData,
         results
@@ -99,7 +99,7 @@ export function SkillTranslator() {
       })
 
       if (!response.ok) {
-        throw new Error('Failed to save translation')
+        throw new Error('Failed to save profile')
       }
 
       setSaveSuccess(true)
@@ -107,8 +107,8 @@ export function SkillTranslator() {
         router.push('/profile')
       }, 1500)
     } catch (error) {
-      console.error('Error saving translation:', error)
-      alert('Failed to save translation. Please try again.')
+      console.error('Error saving profile:', error)
+      alert('Failed to save profile. Please try again.')
     } finally {
       setSaving(false)
     }
@@ -132,7 +132,7 @@ export function SkillTranslator() {
                 Choose Your Sport
               </h2>
               <p className="text-gray-400 text-lg">
-                Let's translate your athletic experience into corporate language
+                Let's turn your athletic experience into a professional profile
               </p>
             </div>
 
@@ -171,7 +171,7 @@ export function SkillTranslator() {
                 Tell Us About Your {selectedSport?.name} Experience
               </h2>
               <p className="text-gray-400 text-lg">
-                The more details you provide, the better your translation
+                The more details you provide, the better your profile
               </p>
             </div>
 
@@ -270,7 +270,7 @@ export function SkillTranslator() {
                     onClick={handleGenerateTranslation}
                     className="w-full"
                   >
-                    Generate Translation
+                    Create My Profile
                   </Button>
                 </div>
               </CardContent>
@@ -293,7 +293,7 @@ export function SkillTranslator() {
                 animate={{ scale: 1 }}
                 transition={{ duration: 0.5 }}
               >
-                Your Translation is Ready
+                Your Professional Profile is Ready
               </motion.h2>
               <p className="text-gray-400 text-lg">
                 Copy these to your resume or LinkedIn profile
